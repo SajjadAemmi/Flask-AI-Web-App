@@ -3,7 +3,7 @@ bcrypt
 sqlmodel
 pillow
 numpy
-opencv-python
+opencv-python-headless
 onnxruntime
 pyyaml
 psycopg2
