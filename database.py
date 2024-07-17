@@ -16,8 +16,9 @@ class Comment(SQLModel, table=True):
     user_id: int = Field(foreign_key="user.id")
 
 
+# DATABASE_URL = 'sqlite:///./database.db'
 # DATABASE_URL = "postgresql://akbar_agha:ramze_akbar_agha@some-postgres:5432/database_akbar_agha"
-DATABASE_URL = 'sqlite:///./database.db'
+DATABASE_URL = "postgres://koyeb-adm:8KJYvP7fhcAF@ep-mute-meadow-a2ieuc9f.eu-central-1.pg.koyeb.app/koyebdb"
 engine = create_engine(DATABASE_URL, echo=True)
 
 # Create the database tables
