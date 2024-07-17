@@ -1,8 +1,5 @@
-import os
 import bcrypt
-import cv2
 import numpy as np
-import base64
 from PIL import Image
 from flask import Flask, jsonify, send_file, flash, render_template, request, redirect, url_for, session as flask_session
 from sqlmodel import Session, select
@@ -11,32 +8,7 @@ from models import LoginModel, RegisterModel
 from src.face_analysis import FaceAnalysis
 from src.object_detection import YOLOv8
 from utils.image import encode_image
-from datetime import datetime, timedelta
-
-def relative_time(datetime_str):
-    # Parse the input string into a datetime object
-    input_time = datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S.%f')
-    
-    # Get the current time
-    current_time = datetime.now()
-    
-    # Calculate the difference
-    time_difference = current_time - input_time
-    
-    # Determine the relative time
-    seconds = time_difference.total_seconds()
-    
-    if seconds < 60:
-        return f"{int(seconds)} seconds ago"
-    elif seconds < 3600:
-        minutes = int(seconds // 60)
-        return f"{minutes} minutes ago"
-    elif seconds < 86400:
-        hours = int(seconds // 3600)
-        return f"{hours} hours ago"
-    else:
-        days = int(seconds // 86400)
-        return f"{days} days ago"
+from utils.data import relative_time
 
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
