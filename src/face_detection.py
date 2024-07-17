@@ -266,8 +266,8 @@ class RetinaFace:
 
         return keep
 
-    def __call__(self, img, max_num=0):
-        bboxes, kpss = self.detect(img, input_size=(640, 640), max_num=max_num, metric="default")
+    def __call__(self, image, max_num=0):
+        bboxes, kpss = self.detect(image, input_size=(640, 640), max_num=max_num, metric="default")
         if bboxes.shape[0] == 0:
             return []
         ret = []

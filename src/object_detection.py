@@ -93,13 +93,14 @@ class YOLOv8:
             score = scores[i]
             class_id = class_ids[i]
             self.draw_detections(output_image, box, score, class_id)
+
+        output_image = cv2.cvtColor(output_image, cv2.COLOR_BGR2RGB)
         return output_image, output_labels
 
     def __call__(self, input_image):
         image_data = self.preprocess(input_image)
         outputs = self.session.run(None, {self.model_inputs[0].name: image_data})
         output_image, output_labels = self.postprocess(input_image, outputs)
-        output_image = cv2.cvtColor(output_image, cv2.COLOR_BGR2RGB)
         return output_image, output_labels
 
 

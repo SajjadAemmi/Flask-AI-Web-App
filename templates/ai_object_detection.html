@@ -26,22 +26,13 @@
             </div>
         </div>
     </div>
+    {% if image_uri %}
     <div class="col-6">
         <div class="card text-bg-light mb-3">
+            <img src="{{ image_uri }}" class="card-img-top">
             <div class="card-body">
-                <h1 class="card-title">
-                    <i class="fa-duotone fa-face-viewfinder"></i>
-                </h1>
-                {% if image_uri %}
-                <div class="row mt-4">
-                    <div class="col">
-                        <img src="{{ image_uri }}" class="img-fluid">
-                    </div>
-                </div>
-                {% endif %}
-
                 {% if labels %}
-                <div class="row mt-4">
+                <div class="row">
                     <div class="col-6">
                         <ul class="list-group">
                             <li class="list-group-item">
@@ -59,6 +50,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
 
 {% endblock %}

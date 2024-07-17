@@ -37,7 +37,7 @@ class AgeGenderEstimator:
             1.0 / self.input_std,
             input_size,
             (self.input_mean, self.input_mean, self.input_mean),
-            swapRB=True,
+            swapRB=False,
         )
         pred = self.session.run(self.output_names, {self.input_name: blob})[0][0]
         assert len(pred) == 3
