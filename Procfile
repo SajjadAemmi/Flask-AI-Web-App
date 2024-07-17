@@ -1,1 +1,1 @@
-web: flask run --port 8000
+web: python app.py

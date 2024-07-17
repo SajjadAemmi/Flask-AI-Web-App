@@ -202,3 +202,7 @@ def add_new_comment():
         db_session.commit()
 
     return redirect(url_for("ai_face_analysis"))
+
+
+if __name__ == "__main__":
+    app.run(port=8000)
