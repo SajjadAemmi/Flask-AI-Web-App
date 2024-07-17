@@ -1,4 +1,5 @@
-from datetime import datetime, timedelta
+from datetime import datetime
+import config
 
 
 def relative_time(datetime_str):
@@ -25,3 +26,7 @@ def relative_time(datetime_str):
     else:
         days = int(seconds // 86400)
         return f"{days} days ago"
+
+
+def allowed_file(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in config.ALLOWED_EXTENSIONS

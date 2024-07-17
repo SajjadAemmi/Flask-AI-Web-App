@@ -1,4 +1,6 @@
+import os
 import bcrypt
+from dotenv import load_dotenv
 import numpy as np
 from PIL import Image
 from flask import (
@@ -18,24 +20,21 @@ from models import LoginModel, RegisterModel
 from src.face_analysis import FaceAnalysis
 from src.object_detection import YOLOv8
 from utils.image import encode_image
-from utils.data import relative_time
+from utils.data import relative_time, allowed_file
 import config
 
 
-ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
+load_dotenv()
+
 
 app = Flask("AI Web App")
-app.secret_key = config.app_secret_key
+app.secret_key = os.getenv('SECRET_KEY')
 app.config["UPLOAD_FOLDER"] = "./uploads"
 
 face_analysis = FaceAnalysis(
     config.face_detection_onnx_model_path, config.age_gender_estimation_onnx_model_path
 )
 object_detector = YOLOv8(config.object_detection_onnx_model_path)
-
-
-def allowed_file(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route("/")
