@@ -203,10 +203,17 @@ def blog():
         statement = select(Topic)
         topics = list(db_session.exec(statement))
 
-    for topic in topics:
-        topic.timestamp = relative_time(topic.timestamp)
+    # for topic in topics:
+    #     topic.timestamp = relative_time(topic.timestamp)
 
     return render_template("blog.html", topics=topics)
+
+
+@app.route("/blog/<int:topic_id>")
+def blog_topic(topic_id):
+    with Session(engine) as db_session:
+        topic = db_session.query(Topic).filter_by(id=topic_id).first()
+        return render_template("topic.html", topic=topic)
 
 
 @app.route("/admin")
@@ -274,8 +281,8 @@ def admin_blog_edit_topic(topic_id):
         if request.method == "GET":
             if topic:
                 return render_template("admin_blog_edit_topic.html", topic=topic)
-            else:
-                return "Topic not found", 404
+                else:
+                    return "Topic not found", 404
         
         elif request.method == "POST":
             if topic:
