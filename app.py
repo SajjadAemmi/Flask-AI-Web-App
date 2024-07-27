@@ -281,8 +281,8 @@ def admin_blog_edit_topic(topic_id):
         if request.method == "GET":
             if topic:
                 return render_template("admin_blog_edit_topic.html", topic=topic)
-                else:
-                    return "Topic not found", 404
+            else:
+                return "Topic not found", 404
         
         elif request.method == "POST":
             if topic:
