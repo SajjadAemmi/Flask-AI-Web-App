@@ -314,7 +314,6 @@ def add_new_comment():
         new_comment = Comment(user_id=session.get("user_id"), content=text)
         db_session.add(new_comment)
         db_session.commit()
-
     return redirect(url_for("ai_face_analysis"))
 
 
