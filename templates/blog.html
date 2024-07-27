@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  خانه
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+	<div class="col-6">
+<div class="list-group">
+    {% for topic in topics %}
+    <a href="#" class="list-group-item list-group-item-action">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">
+            {{ topic.title }}
+        </h5>
+        <small class="text-body-secondary">
+            {{ topic.timestamp }}
+        </small>
+      </div>
+      <p class="mb-1">
+        {{ topic.content }}
+      </p>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+</div>
+{% endblock %}

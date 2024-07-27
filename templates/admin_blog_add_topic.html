@@ -1,0 +1,28 @@
+{% extends 'admin_layout.html' %}
+
+{% block title %}
+  خانه
+{% endblock %}
+
+{% block content %}
+
+<div class="page-body">
+    <div class="container-fluid">
+      <div class="row page-title">
+        <div class="col-sm-6">
+            <form method="post">
+                <div class="mb-3">
+                  <label class="form-label">Title</label>
+                  <input type="text" name="title" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Body</label>
+                    <textarea class="form-control" name="body" rows="3"></textarea>
+                  </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

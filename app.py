@@ -15,7 +15,7 @@ from flask import (
 )
 
 from sqlmodel import Session, select
-from database import get_user_by_username, create_user, engine, User, Comment
+from database import get_user_by_username, create_user, engine, User, Comment, Topic
 from models import LoginModel, RegisterModel
 from src.face_analysis import FaceAnalysis
 from src.object_detection import YOLOv8
@@ -28,7 +28,7 @@ load_dotenv()
 
 
 app = Flask("AI Web App")
-app.secret_key = os.getenv('SECRET_KEY')
+app.secret_key = os.getenv("SECRET_KEY")
 app.config["UPLOAD_FOLDER"] = "./uploads"
 
 face_analysis = FaceAnalysis(
@@ -61,6 +61,7 @@ def login():
             if bcrypt.checkpw(password_byte, bytes(user.password, "utf-8")):
                 flash("خوش اومدی", "success")
                 session["user_id"] = user.id
+                session["user_username"] = user.username
                 return redirect(url_for("profile"))
             else:
                 flash("در وارد کردن گذرواژه بیشتر دقت کن", "danger")
@@ -196,6 +197,18 @@ def mind_reader_result():
     return render_template("mind_reader_result.html", number=number)
 
 
+@app.route("/blog")
+def blog():
+    with Session(engine) as db_session:
+        statement = select(Topic)
+        topics = list(db_session.exec(statement))
+
+    for topic in topics:
+        topic.timestamp = relative_time(topic.timestamp)
+
+    return render_template("blog.html", topics=topics)
+
+
 @app.route("/admin")
 def admin():
     # user_id = session.get('user_id')
@@ -212,6 +225,45 @@ def admin():
 
     return render_template("admin.html", users=users)
 
+
+@app.route("/admin/blog")
+def admin_blog():
+    # user_id = session.get('user_id')
+    # role = session.get('role')
+    # if not user_id or role != "Admin":
+    #     return redirect(url_for('login'))
+
+    with Session(engine) as db_session:
+        statement = select(Topic)
+        topics = list(db_session.exec(statement))
+
+    for topic in topics:
+        topic.timestamp = relative_time(topic.timestamp)
+
+    return render_template("admin_blog.html", topics=topics)
+
+
+@app.route("/admin/blog/add-topic", methods=["GET", "POST"])
+def admin_blog_add_topic():
+    user_id = session.get("user_id")
+    # role = session.get('role')
+    # if not user_id or role != "Admin":
+    #     return redirect(url_for('login'))
+
+    if request.method == "GET":
+        return render_template("admin_blog_add_topic.html")
+    elif request.method == "POST":
+        topic = Topic(
+            title=request.form["title"],
+            body=request.form["body"],
+            user_id=user_id,
+            image="",
+        )
+        with Session(engine) as db_session:
+            db_session.add(topic)
+            db_session.commit()
+        return redirect(url_for("admin_blog"))
+    
 
 @app.route("/add-new-comment", methods=["POST"])
 def add_new_comment():

@@ -18,6 +18,16 @@ class Comment(SQLModel, table=True):
     user_id: int = Field(foreign_key="user.id")
 
 
+
+class Topic(SQLModel, table=True):
+    id: int = Field(default=None, primary_key=True)
+    title: str
+    body: str
+    image: str
+    timestamp: datetime = Field(default_factory=datetime.now)
+    user_id: int = Field(foreign_key="user.id")
+
+
 # DATABASE_URL = 'sqlite:///./database.db'
 # DATABASE_URL = "postgresql://akbar_agha:ramze_akbar_agha@some-postgres:5432/database_akbar_agha"
 
