@@ -237,8 +237,8 @@ def admin_blog():
         statement = select(Topic)
         topics = list(db_session.exec(statement))
 
-    for topic in topics:
-        topic.timestamp = relative_time(topic.timestamp)
+    # for topic in topics:
+        # topic.timestamp = relative_time(topic.timestamp)
 
     return render_template("admin_blog.html", topics=topics)
 
@@ -264,6 +264,41 @@ def admin_blog_add_topic():
             db_session.commit()
         return redirect(url_for("admin_blog"))
     
+@app.route("/admin/blog/edit-topic/<int:topic_id>", methods=["GET", "POST"])
+def admin_blog_edit_topic(topic_id):
+    user_id = session.get("user_id")
+
+    with Session(engine) as db_session:
+        topic = db_session.query(Topic).filter_by(id=topic_id).first()
+
+        if request.method == "GET":
+            if topic:
+                return render_template("admin_blog_edit_topic.html", topic=topic)
+            else:
+                return "Topic not found", 404
+        
+        elif request.method == "POST":
+            if topic:
+                topic.title = request.form["title"]
+                topic.body = request.form["body"]
+                db_session.commit()
+                return redirect(url_for("admin_blog"))
+            else:
+                return "Topic not found", 404
+
+
+@app.route("/admin/blog/delete-topic/<int:topic_id>", methods=["POST"])
+def admin_blog_delete_topic(topic_id):
+    with Session(engine) as db_session:
+        topic = db_session.query(Topic).filter_by(id=topic_id).first()
+
+        if topic:
+            db_session.delete(topic)
+            db_session.commit()
+            return redirect(url_for("admin_blog"))
+        else:
+            return "Topic not found", 404
+
 
 @app.route("/add-new-comment", methods=["POST"])
 def add_new_comment():

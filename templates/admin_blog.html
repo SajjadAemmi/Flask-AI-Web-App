@@ -9,9 +9,10 @@
 <div class="page-body">
     <div class="container-fluid">
       <div class="row page-title">
-        <div class="col-sm-6">
+        <div class="col">
+          <ul class="list-group">
             {% for topic in topics %}
-            <a href="#" class="list-group-item list-group-item-action">
+            <li class="list-group-item list-group-item-action">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">
                     {{ topic.title }}
@@ -21,12 +22,16 @@
                 </small>
               </div>
               <p class="mb-1">
-                {{ topic.content }}
+                {{ topic.body }}
               </p>
-            </a>
+            <a class="btn btn-info" href="/admin/blog/edit-topic/{{ topic.id }}">Edit</a>
+            <a class="btn btn-danger" href="/admin/blog/delete-topic/{{ topic.id }}">Delete</a>
+            </li>
             {% endfor %}
+          </ul>
         </div>
     </div>
+    <a class="btn btn-success" href="/admin/blog/add-topic">Add topic</a>
 </div>
 </div>
 {% endblock %}
