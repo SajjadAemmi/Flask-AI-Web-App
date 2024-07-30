@@ -1,6 +1,10 @@
-<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body sticky-top" data-bs-theme="dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">وب‌اپ هوش‌ مصنوعی سجاد</a>
+        <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='images/s_icon.svg') }}" 
+            alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            وب‌اپ هوش‌ مصنوعی سجاد
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -38,14 +42,16 @@
                     <a class="nav-link" href="/register">ثبت نام</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">ورود به حساب کاربری</a>
+                    <a class="nav-link" href="/login">ورود</a>
                 </li>
                 {% endif %}
         
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="جستجو" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-success" type="submit">
+                    <i class="fa-duotone fa-search"></i>
+                </button>
             </form>
         </div>
     </div>

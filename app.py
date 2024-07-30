@@ -147,7 +147,7 @@ def ai_face_analysis():
                         image_uri=image_uri,
                     )
     else:
-        return redirect(url_for("index"))
+        return redirect(url_for("login"))
 
 
 @app.route("/ai-object-detection", methods=["GET", "POST"])
@@ -169,7 +169,7 @@ def ai_object_detection():
                         "ai_object_detection.html", labels=labels, image_uri=image_uri
                     )
     else:
-        return redirect(url_for("index"))
+        return redirect(url_for("login"))
 
 
 @app.route("/ai-pose-detection", methods=["GET"])
@@ -177,7 +177,7 @@ def ai_pose_detection():
     if session.get("user_id"):
         return render_template("ai_pose_detection.html")
     else:
-        return redirect(url_for("index"))
+        return redirect(url_for("login"))
 
 
 @app.route("/mind-reader")
